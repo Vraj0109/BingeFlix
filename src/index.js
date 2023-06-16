@@ -6,16 +6,7 @@ import App from './components/App.jsx';
 
 const root = createRoot(document.getElementById('root'));
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#b71c1c',
-    },
-    secondary: {
-      main: '#c62828',
-    },
-  },
-});
+const theme = createTheme();
 
 root.render(
   <ThemeProvider theme={theme}>
