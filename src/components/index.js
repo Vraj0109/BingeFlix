@@ -4,3 +4,5 @@ export { default as Movieinfo } from './Movieinfo/Movieinfo.jsx';
 export { default as NavBar } from './NavBar/NavBar.jsx';
 export { default as Profiles } from './Profiles/Profiles.jsx';
 export { default as Sidebar } from './Sidebar/Sidebar.jsx';
+export { default as Movielist } from './Movielist/Movielist.jsx';
+export { default as Movie } from './Movie/Movie.jsx';
