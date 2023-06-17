@@ -13,7 +13,7 @@ function NavBar() {
   const isAuthenticated = true;
   const [mobileOpen, setMobileOpen] = useState(false);
   return (
-    <div>
+    <div className={classes.main}>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           {isMobile && (
