@@ -4,7 +4,7 @@ const drawerWidth = 240;
 
 export default makeStyles((theme) => ({
   main: {
-    width: '100%',
+    // width: '100%',
   },
   toolbar: {
     height: '80px',
