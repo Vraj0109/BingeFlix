@@ -12,7 +12,12 @@ export const tmdbApi = createApi({
     }),
     // get movies by type
     getMovies: builder.query({
-      query: ({ genreIdOrCatagoryName, page }) => {
+      query: ({ genreIdOrCatagoryName, page, searchQuery }) => {
+        // get movies by search
+        if (searchQuery) {
+          return `/search/movie?query=${searchQuery}&page=${page}&api_key=${tmdbApikey}`;
+        }
+
         // get movies by category
         if (genreIdOrCatagoryName && typeof genreIdOrCatagoryName === 'string') {
           return `movie/${genreIdOrCatagoryName}?page=${page}&api_key=${tmdbApikey}`;
