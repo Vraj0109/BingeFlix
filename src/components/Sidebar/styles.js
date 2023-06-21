@@ -1,6 +1,9 @@
 import { makeStyles } from '@mui/styles';
 
 export default makeStyles((theme) => ({
+  man: {
+    scrollbarWidth: 'none',
+  },
   imageLink: {
     dispay: 'flex',
     justifyContent: 'center',

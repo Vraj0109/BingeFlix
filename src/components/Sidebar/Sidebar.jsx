@@ -25,7 +25,7 @@ function Sidebar({ setMobileOpen }) {
   const dispatch = useDispatch();
   // console.log(genreIdOrCatagoryName);
   return (
-    <div>
+    <div className={classes.man}>
       <Link to="/" className={classes.imageLink}>
         <img
           className={classes.image}

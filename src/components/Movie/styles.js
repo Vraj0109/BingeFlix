@@ -2,14 +2,19 @@ import { makeStyles } from '@mui/styles';
 
 export default makeStyles((theme) => ({
   movie: {
-    padding: '10px',
+    paddingTop: '20px',
+    padding: '1px',
+  },
+  tname: {
+    marginTop: '13px',
+    width: 'inherit',
   },
   title: {
     color: theme.palette.text.primary,
     textOverflow: 'ellipsis',
-    width: '190px',
-    whiteSpace: 'nowrap',
+    width: '180px',
     overflow: 'hidden',
+    whiteSpace: 'nowrap',
     marginTop: '10px',
     marginBottom: 0,
     textAlign: 'center',
@@ -19,11 +24,15 @@ export default makeStyles((theme) => ({
   },
   image: {
     width: '190px',
-    height: 'auto',
+    aspectRatio: '10/15',
     borderRadius: '20px',
     marginButton: '10px',
+    marginRight: '25px',
+    transition: 'transform 200ms ease',
+    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.64)',
     '&:hover': {
-      transform: 'scale(1.05)',
+      boxShadow: '15px 10px 5px rgba(0, 0, 0, 0.64)',
+      transform: 'scale(1.1)',
     },
     [theme.breakpoints.up('xs')]: {
       width: '90%',
