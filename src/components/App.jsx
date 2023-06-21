@@ -1,7 +1,8 @@
 import React from 'react';
 import { CssBaseline } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
-import { Actors, Movieinfo, Movies, Profiles, NavBar } from '.';
+import { Actors, Movieinfo, Movies, Profiles } from '.';
+import NavBar from './NavBar/NavBar';
 
 import useStyles from './styles';
 

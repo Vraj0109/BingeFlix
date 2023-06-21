@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Box, CircularProgress, useMediaQuery, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { useGetMoviesQuery } from '../../services/TMDB.js';
-import { Movielist } from '..';
-import { selectGenreOrCatagory } from '../../features/currentGenreOrCatagory.js';
+import Movielist from '../Movielist/Movielist.jsx';
+// import { selectGenreOrCatagory } from '../../features/currentGenreOrCatagory.js';
 
 function Movies() {
   const [page, setPage] = useState(1);

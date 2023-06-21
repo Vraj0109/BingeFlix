@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import useStyles from './styles';
-import { Sidebar, Search } from '..';
+import Sidebar from '../Sidebar/Sidebar';
+import Search from '../Search/Search';
+// import { Sidebar, Search } from '..';
 import { fetchToken, creatSessionId, movieApi } from '../../utils';
 
 import { setUser, userSelector } from '../../features/auth';
