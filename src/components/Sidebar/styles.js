@@ -5,6 +5,7 @@ export default makeStyles((theme) => ({
     scrollbarWidth: 'none',
   },
   imageLink: {
+    width: '100%',
     dispay: 'flex',
     justifyContent: 'center',
     padding: '10% 0',

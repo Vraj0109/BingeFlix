@@ -29,9 +29,9 @@ export default makeStyles((theme) => ({
     marginButton: '10px',
     marginRight: '25px',
     transition: 'transform 200ms ease',
-    boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.64)',
+    boxShadow: theme.palette.mode === 'dark' ? '5px 5px 5px rgba(100, 100, 100, 0.64)' : '5px 5px 5px rgba(0, 0, 0, 0.64)',
     '&:hover': {
-      boxShadow: '15px 10px 5px rgba(0, 0, 0, 0.64)',
+      boxShadow: theme.palette.mode === 'dark' ? '15px 15px 5px rgba(100, 100, 100, 0.64)' : '15px 15px 5px rgba(0, 0, 0, 0.64)',
       transform: 'scale(1.1)',
     },
     [theme.breakpoints.up('xs')]: {

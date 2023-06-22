@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
   containerSpaceAround: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContentL: 'space-between',
+    justifyContent: 'space-between',
     overflow: 'auto',
     scrollbarWidth: 'thin',
     paddingLeft: '20px',
@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
   },
   poster: {
     borderRadius: '20px',
-    boxShadow: '0.5em 1em 1em rgba(0, 0, 0, 0.64)',
+    boxShadow: theme.palette.mode === 'dark' ? '0.5em 1em 1em rgba(100, 100, 100, 0.64)' : '0.5em 1em 1em rgba(0, 0, 0, 0.64)',
     width: '80%',
     [theme.breakpoints.down('md')]: {
       margin: '0 auto',

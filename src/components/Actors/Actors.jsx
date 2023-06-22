@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Typography, useMediaQuery } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { ArrowBack } from '@mui/icons-material';
@@ -10,13 +10,18 @@ import { useGetActorDetailsQuery, useGetMoviesByActorIdQuery } from '../../servi
 import MovieList from '../Movielist/Movielist';
 import useStyles from './style';
 
+import Pagination from '../Pagination/Pagination';
+
 function Actors() {
   const { id } = useParams();
   const navigate = useNavigate();
   const classes = useStyles();
-  const page = 1;
+  const [page, setPage] = useState(1);
   const { data, isFetching, error } = useGetActorDetailsQuery(id);
   const { data: movies } = useGetMoviesByActorIdQuery({ id, page });
+  const md = useMediaQuery((theme) => theme.breakpoints.only('md'));
+
+  const numberOfMovies = md ? 18 : 20;
   if (isFetching) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
@@ -62,7 +67,8 @@ function Actors() {
       </Grid>
       <Box margin="2rem 0">
         <Typography variant="h2" gutterBottom align="center">Movies</Typography>
-        {movies && <MovieList movies={movies} numberOfMovies={12} />}
+        {movies && <MovieList movies={movies} numberOfMovies={numberOfMovies} />}
+        <Pagination currentPage={page} setPage={setPage} totalPages={movies?.total_pages} />
       </Box>
     </div>
   );

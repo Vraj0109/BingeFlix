@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Modal, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
 import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
 
@@ -9,29 +9,54 @@ import useStyles from './styles';
 
 import genreIcons from '../../assets/genres';
 
-import { useGetMovieQuery, useGetRecommendationQuery } from '../../services/TMDB';
+import { useGetListQuery, useGetMovieQuery, useGetRecommendationQuery } from '../../services/TMDB';
 
 import { selectGenreOrCatagory } from '../../features/currentGenreOrCatagory';
 
 import MovieList from '../Movielist/Movielist';
 
+import { userSelector } from '../../features/auth';
+
 function Movieinfo() {
+  const { user } = useSelector(userSelector);
   const { id } = useParams();
+  const { data: recommendations, isFeatching: isRecommendationsFetching } = useGetRecommendationQuery({ list: '/recommendations', movieId: id });
   const { data, isFetching, error } = useGetMovieQuery(id);
+  const { data: favoriteMovies } = useGetListQuery({ listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
+  const { data: watchlistMovies } = useGetListQuery({ listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
   const classes = useStyles();
+  const [isMovieFavorated, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsMovieFavorited(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id));
+  }, [favoriteMovies, data]);
+  useEffect(() => {
+    setIsMovieWatchlisted(!!watchlistMovies?.results?.find((movie) => movie?.id === data?.id));
+  }, [watchlistMovies, data]);
 
   const [open, setOpen] = useState(false);
 
-  const { data: recommendations, isFeatching: isRecommendationsFetching } = useGetRecommendationQuery({ list: '/recommendations', movieId: id });
-  const isMovieFavorated = true;
-  const isMovieWatchlisted = false;
   // console.log(data?.videos);
-  const addToFavorites = () => {
+  const xl = useMediaQuery((theme) => theme.breakpoints.only('xl'));
 
+  const numberOfMovies = xl ? 10 : 12;
+  const addToFavorites = async () => {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+      media_type: 'movie',
+      media_id: id,
+      favorite: !isMovieFavorated,
+    });
+    setIsMovieFavorited((prev) => !prev);
   };
-  const addToWatchlist = () => {
-
+  const addToWatchlist = async () => {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${process.env.REACT_APP_TMDB_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+      media_type: 'movie',
+      media_id: id,
+      watchlist: !isMovieWatchlisted,
+    });
+    setIsMovieWatchlisted((prev) => !prev);
   };
   if (isFetching || isRecommendationsFetching) {
     return (
@@ -58,7 +83,7 @@ function Movieinfo() {
           alt={data?.title}
         />
       </Grid>
-      <Grid item container direction="column" lg={7}>
+      <Grid item container direction="column" lg={7} md={6}>
         <Typography variant="h4" align="center" gutterBottom>
           {data?.title}({data?.release_date.split('-')[0]})
         </Typography>
@@ -143,7 +168,7 @@ function Movieinfo() {
           You might also like
         </Typography>
         {recommendations
-          ? <MovieList movies={recommendations} numberOfMovies={12} />
+          ? <MovieList movies={recommendations} numberOfMovies={numberOfMovies} />
           : <Box> Sorry nothing was found. </Box>}
       </Box>
       <Modal
@@ -152,16 +177,14 @@ function Movieinfo() {
         open={open}
         onClose={() => setOpen(false)}
       >
-        {data?.videos?.results?.length > 0 && (
-          <iframe
-            autoPlay
-            className={classes.video}
-            frameBorder="0"
-            title="Trailer"
-            src={`https://www.youtube.com/embed/${data.videos.results[0].key}`}
-            allow="autoplay"
-          />
-        )}
+        <iframe
+          autoPlay
+          className={classes.video}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          frameBorder="0"
+          title="Trailer"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        />
       </Modal>
     </Grid>
   );

@@ -8,9 +8,6 @@ import { useGetGenresQuery } from '../../services/TMDB';
 import genreIcons from '../../assets/genres/index';
 import { selectGenreOrCatagory } from '../../features/currentGenreOrCatagory';
 
-const red = './logo-dark.png';
-const bla = './logo-light.png';
-
 const categories = [
   { label: 'Popular', value: 'popular' },
   { label: 'Top Rated', value: 'top_rated' },
@@ -18,12 +15,16 @@ const categories = [
 ];
 
 function Sidebar({ setMobileOpen }) {
-  // const { genreIdOrCatagoryName } = useSelector((state) => state.currentGenreOrCatagory);
+  const { genreIdOrCatagoryName } = useSelector((state) => state.currentGenreOrCatagory);
   const theme = useTheme();
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
-  // console.log(genreIdOrCatagoryName);
+  const red = 'https://github.com/Vraj0109/BingeFlix/blob/main/public/logo-dark.png?raw=true';
+  const bla = 'https://github.com/Vraj0109/BingeFlix/blob/main/public/logo-light.png?raw=true';
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCatagoryName]);
   return (
     <div className={classes.man}>
       <Link to="/" className={classes.imageLink}>
@@ -40,7 +41,7 @@ function Sidebar({ setMobileOpen }) {
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => dispatch(selectGenreOrCatagory(value))} button>
               <ListItemIcon>
-                <img src={genreIcons[label.toLocaleLowerCase()]} className={classes.genreImages} height={30} />
+                <img src={genreIcons[label.toLocaleLowerCase()]} className={classes.genreImage} height={30} />
               </ListItemIcon>
               <ListItemText primary={label} />
             </ListItem>
@@ -59,7 +60,7 @@ function Sidebar({ setMobileOpen }) {
             <Link key={name} className={classes.links} to="/">
               <ListItem onClick={() => dispatch(selectGenreOrCatagory(id))} button>
                 <ListItemIcon>
-                  <img src={genreIcons[name.toLowerCase()]} className={classes.genreImages} height={30} />
+                  <img src={genreIcons[name.toLowerCase()]} className={classes.genreImage} height={30} />
                 </ListItemIcon>
                 <ListItemText primary={name} />
               </ListItem>
