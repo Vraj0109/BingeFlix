@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState, useContext } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
