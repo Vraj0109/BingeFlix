@@ -26,11 +26,11 @@ export const creatSessionId = async () => {
   const token = localStorage.getItem('request_token');
   if (token) {
     try {
-      const { data: { sessionId } } = await movieApi.post('authentication/session/new', {
+      const { data: { session_id } } = await movieApi.post('authentication/session/new', {
         request_token: token,
       });
-      localStorage.setItem('session_id', sessionId);
-      return sessionId;
+      localStorage.setItem('session_id', session_id);
+      return session_id;
     } catch (error) {
       console.log("soory couldn't make the session");
     }

@@ -8,7 +8,8 @@ export default makeStyles((theme) => ({
   },
   button: {
     margin: '30px 2px',
-    color: theme.palette.mode === 'dark' ? 'anger' : 'primary',
+    backgroundColor: theme.palette.mode === 'dark' ? 'red' : 'primary',
+    // backgroundColor: 'red',
   },
   pageNumber: {
     margin: '0 20px !important',

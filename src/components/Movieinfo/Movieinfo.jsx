@@ -18,6 +18,7 @@ import MovieList from '../Movielist/Movielist';
 import { userSelector } from '../../features/auth';
 
 function Movieinfo() {
+  const dispatch = useDispatch();
   const { user } = useSelector(userSelector);
   const { id } = useParams();
   const { data: recommendations, isFeatching: isRecommendationsFetching } = useGetRecommendationQuery({ list: '/recommendations', movieId: id });
@@ -27,7 +28,6 @@ function Movieinfo() {
   const classes = useStyles();
   const [isMovieFavorated, setIsMovieFavorited] = useState(false);
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsMovieFavorited(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id));
@@ -180,10 +180,11 @@ function Movieinfo() {
         <iframe
           autoPlay
           className={classes.video}
+          allowFullScreen
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           frameBorder="0"
           title="Trailer"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          src={`https://api.riptv.net/v2/embed/movie?id=${id}`}
         />
       </Modal>
     </Grid>

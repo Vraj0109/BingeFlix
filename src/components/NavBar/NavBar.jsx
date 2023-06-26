@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 import React, { useEffect, useState, useContext } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
@@ -16,17 +15,17 @@ import { setUser, userSelector } from '../../features/auth';
 import { ColorModeContext } from '../../utils/ToggleColorMode';
 
 function NavBar() {
-  const { isAuthenticated, user } = useSelector(userSelector);
+  const { user, isAuthenticated } = useSelector(userSelector);
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
   const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const colorMode = useContext(ColorModeContext);
+
   const token = localStorage.getItem('request_token');
   const sessionIdFromlStorage = localStorage.getItem('session_id');
-
-  const colorMode = useContext(ColorModeContext);
 
   useEffect(() => {
     const logInUser = async () => {
@@ -46,6 +45,7 @@ function NavBar() {
 
     logInUser();
   }, [token]);
+
   return (
     <div className={classes.main}>
       <AppBar position="fixed">
