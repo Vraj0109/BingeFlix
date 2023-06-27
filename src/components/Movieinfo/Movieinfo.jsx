@@ -6,8 +6,6 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { skipToken } from '@reduxjs/toolkit/dist/query';
-
 import useStyles from './styles';
 
 import genreIcons from '../../assets/genres';

@@ -20,7 +20,7 @@ function Movies() {
       </Box>
     );
   }
-  if (!data.results.length) {
+  if (!data?.results.length) {
     return (
       <Box displayPrint="flex" alignItems="center" mt="20px">
         <Typography variant="h4">no movies that match that name.
