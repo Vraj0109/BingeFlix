@@ -5,6 +5,9 @@ import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBord
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { skipToken } from '@reduxjs/toolkit/dist/query';
+
 import useStyles from './styles';
 
 import genreIcons from '../../assets/genres';
@@ -23,17 +26,49 @@ function Movieinfo() {
   const { id } = useParams();
   const { data: recommendations, isFeatching: isRecommendationsFetching } = useGetRecommendationQuery({ list: '/recommendations', movieId: id });
   const { data, isFetching, error } = useGetMovieQuery(id);
-  const { data: favoriteMovies } = useGetListQuery({ listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
-  const { data: watchlistMovies } = useGetListQuery({ listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
+
+  const [pagefav, setPagefav] = useState(1);
+  const [pagewat, setPagewat] = useState(1);
+  const { data: favoriteMovies } = useGetListQuery({ listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: pagefav });
+  const { data: watchlistMovies } = useGetListQuery({ listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: pagewat });
   const classes = useStyles();
   const [isMovieFavorated, setIsMovieFavorited] = useState(false);
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
-
   useEffect(() => {
-    setIsMovieFavorited(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id));
+    setIsMovieFavorited(false);
+    setIsMovieWatchlisted(false);
+    setPagefav(1);
+    setPagewat(1);
+  }, [id, data, dispatch]);
+  useEffect(() => {
+    // let i = 1;
+    // while (i < 10) {
+    //   console.log(i);
+    //   setPagefav(i);
+    //   console.log(favoriteMovies);
+    //   // if (tempfav?.results === null) break;
+    //   // console.log(tempfav);
+    //   // setIsMovieFavorited(!!tempfav?.results.find((movie) => movie?.id === data?.id));
+    //   // if (isMovieFavorated) break;
+    //   // if (i >= tempfav.total_pages) break;
+    //   i += 1;
+    // }
+    if (isMovieFavorated) return;
+    // console.log(favoriteMovies);
+    if (favoriteMovies?.results.length === 0) return;
+    setIsMovieFavorited(!!favoriteMovies?.results.find((movie) => movie?.id === data?.id));
+    // if (pagefav === 10) return;
+    if (pagefav !== favoriteMovies?.total_pages) setPagefav(pagefav + 1);
   }, [favoriteMovies, data]);
+  // useEffect(() => {
+  //   console.log(favoriteMovies);
+  //   // setIsMovieFavorited(!!favoriteMovies?.results?.find((movie) => movie?.id === data?.id));
+  // }, [favoriteMovies]);
   useEffect(() => {
-    setIsMovieWatchlisted(!!watchlistMovies?.results?.find((movie) => movie?.id === data?.id));
+    if (isMovieWatchlisted) return;
+    if (watchlistMovies?.results.length === 0) return;
+    setIsMovieWatchlisted(!!watchlistMovies?.results.find((movie) => movie?.id === data?.id));
+    if (pagewat !== watchlistMovies?.total_pages) setPagewat(pagewat + 1);
   }, [watchlistMovies, data]);
 
   const [open, setOpen] = useState(false);

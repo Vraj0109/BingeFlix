@@ -20,7 +20,7 @@ export const tmdbApi = createApi({
 
         // get movies by category
         if (genreIdOrCatagoryName && typeof genreIdOrCatagoryName === 'string') {
-          return `movie/${genreIdOrCatagoryName}?page=${page}&api_key=${tmdbApikey}`;
+          return `movie1/${genreIdOrCatagoryName}?page=${page}&api_key=${tmdbApikey}`;
         }
         // get movies by genres
         if (genreIdOrCatagoryName && typeof genreIdOrCatagoryName === 'number') {
